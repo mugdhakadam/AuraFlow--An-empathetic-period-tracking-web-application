@@ -34,8 +34,17 @@ At the core of this experience is the **Empathetic Companion Agent**. Unlike sta
   - 100% local persistence via `localStorage`—no data ever leaves your device.
 
 ---
+## 🤓Note from the Developer Mugdha Kadam
+--** As a Technical Program/Product Manager, it is my task to create the application prototypes, provide the details of the harness including the Guardrails, to show how the UI will look like, the Business purpose/Value of the delivery. This is my attempt to portray the same.
+As I become more and more into solving these type of problems, I am also working on my technical skills in Python and Agentic Programming. 
+With more participation in Hackathons like the Google X Kaggle, I aim to be more and more better in my submissions. 
+---
+
 
 ## 🏗️ Architectural Overview
+
+--** Please find the Architecture diagram in the Github repository: https://github.com/mugdhakadam/AuraFlow--An-empathetic-period-tracking-web-application/blob/main/AuraFlow%20-%20Architecture%20Diagram.png
+---
 
 ```mermaid
 graph TD
