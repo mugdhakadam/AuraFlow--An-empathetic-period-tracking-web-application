@@ -10,6 +10,12 @@ Every month, a woman's body goes through a sacred, complex, and transformative c
 
 Without understanding, this cycle can feel like a source of distress, frustration, and confusion. **AuraFlow** is created to change this narrative. It turns a monthly challenge into a source of personal empowerment, harmony, and self-love.
 
+### The Role of the Empathetic Companion Agent
+At the core of this experience is the **Empathetic Companion Agent**. Unlike standard tracker apps that rely on cold, mechanical calculators, this agent acts as a warm, responsive, and intuitive digital companion. It is designed to:
+- **Actively Listen & Adapt**: It analyzes the physical symptoms, mood states, and notes you log daily, synthesizing these inputs to refine its mood predictions and adjust recommendations dynamically.
+- **Provide Compassionate Advice**: Rather than demanding constant output, it helps you align your workload and nutrition with your body's current chemistry, suggesting comforting foods, grounding exercises, and phase-tailored daily checklists.
+- **Maintain a Protective Presence**: It monitors emotional signals and safety markers. If a user logs thoughts of deep distress or self-harm, the agent steps in to shield them, immediately routing them to warm support and vital crisis resources, demonstrating that they are never truly alone.
+
 ---
 
 ## ✨ Features
