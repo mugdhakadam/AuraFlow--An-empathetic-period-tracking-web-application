@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuraFlow - Menstrual Period Buddy & Companion</title>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main Style Sheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container" id="app-container">
+        
+        <!-- Header & Profile Controller -->
+        <header>
+            <div class="brand">
+                <i class="fa-solid fa-wand-magic-sparkles brand-icon"></i>
+                <div>
+                    <h1 class="brand-title">AuraFlow</h1>
+                    <div class="brand-tagline">Empathetic Period Buddy</div>
+                </div>
+            </div>
+            
+            <div class="profile-controls">
+                <select id="profile-selector" class="profile-select">
+                    <option value="">-- Choose Profile --</option>
+                </select>
+                <button id="btn-new-profile" class="btn btn-secondary">
+                    <i class="fa-solid fa-plus"></i> New Profile
+                </button>
+                <button id="btn-edit-profile" class="btn btn-secondary" style="display: none;">
+                    <i class="fa-solid fa-pen"></i> Edit
+                </button>
+                <button id="btn-delete-profile" class="btn btn-danger" style="display: none;">
+                    <i class="fa-solid fa-trash"></i> Delete
+                </button>
+            </div>
+        </header>
+
+        <!-- VIEW 1: Welcome & Problem Statement -->
+        <section id="welcome-view" class="view welcome-card glass-card">
+            <div class="welcome-logo">
+                <i class="fa-solid fa-circle-nodes"></i>
+            </div>
+            <h2 class="welcome-title">Honor Your Body's Natural Cycle</h2>
+            
+            <div class="sentimental-quote">
+                "You are not the same person every day, and you aren't meant to be. You are a cyclical being, beautiful in all your phases."
+            </div>
+
+            <p class="welcome-text">
+                Every month, a woman's body goes through a sacred, complex cycle of transformation. 
+                Instead of pushing against your body, learn to align your energy, nutrition, moods, and tasks 
+                with your chemistry. Let <strong>AuraFlow</strong> guide you through your Menstrual, Follicular, 
+                Ovulatory, and Luteal phases with absolute comfort, clarity, and self-love.
+            </p>
+            
+            <button onclick="showForm()" class="btn">
+                <i class="fa-solid fa-heart"></i> Get Started
+            </button>
+        </section>
+
+        <!-- VIEW 2: Profile Setup / Upsert -->
+        <section id="form-view" class="view">
+            <div class="form-card">
+                <h2 id="form-title" class="form-title">Tell AuraFlow About Yourself</h2>
+                <p id="form-subtitle" class="form-subtitle">We customize all insights, foods, and exercises to your cycle phase.</p>
+                
+                <form id="profile-form">
+                    <div class="form-group">
+                        <label for="form-name" class="form-label">Your Name</label>
+                        <input type="text" id="form-name" class="form-input" placeholder="e.g., Sarah" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="form-age" class="form-label">Age</label>
+                        <input type="number" id="form-age" class="form-input" min="9" max="90" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="form-lmp" class="form-label">Last Period Start Date (LMP)</label>
+                        <input type="date" id="form-lmp" class="form-input" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="form-cycle-length" class="form-label">Typical Cycle Length (Days)</label>
+                        <input type="number" id="form-cycle-length" class="form-input" min="20" max="45" value="28" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="form-details" class="form-label">How are you feeling? / Cycle Details</label>
+                        <textarea id="form-details" class="form-input" placeholder="Write any notes about cramps, mood, energy levels, or symptom patterns..."></textarea>
+                    </div>
+                    
+                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                        <button type="submit" id="form-submit-btn" class="btn" style="flex: 1;">Save & View Report</button>
+                        <button type="button" id="form-cancel-btn" class="btn btn-secondary" style="display: none;">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- VIEW 3: Dashboard View -->
+        <section id="dashboard-view" class="view">
+            
+            <!-- Quick Meta Info bar -->
+            <div class="meta-info-strip">
+                <div class="meta-item"><i class="fa-solid fa-user"></i> Companion Profile: <strong id="display-name"></strong></div>
+                <div class="meta-item"><i class="fa-solid fa-calendar-day"></i> Age: <strong id="display-age"></strong></div>
+                <div class="meta-item"><i class="fa-solid fa-clock"></i> LMP Started: <strong id="display-lmp"></strong></div>
+                <div class="meta-item"><i class="fa-solid fa-arrows-spin"></i> Cycle Length: <strong id="display-cycle-length"></strong> days</div>
+            </div>
+
+            <div class="dashboard-grid">
+                
+                <!-- Left Panel: Cycle Tracker -->
+                <div class="panel-left">
+                    
+                    <!-- Tracker Card -->
+                    <div class="glass-card phase-tracker-card">
+                        <h3 class="card-title"><i class="fa-solid fa-rotate"></i> Your Rhythm</h3>
+                        
+                        <div class="cycle-circle-container">
+                            <svg class="cycle-svg">
+                                <circle class="cycle-track" cx="110" cy="110" r="90"></circle>
+                                <circle id="cycle-progress-circle" class="cycle-progress" cx="110" cy="110" r="90"></circle>
+                            </svg>
+                            <div class="cycle-content">
+                                <div class="cycle-day-label">Cycle</div>
+                                <div class="cycle-day-number" id="cycle-day-number">--</div>
+                                <div class="cycle-day-label">Day</div>
+                            </div>
+                        </div>
+
+                        <span id="phase-badge" class="phase-badge">Phase</span>
+                        
+                        <div class="next-period-info">
+                            Next cycle starts in <strong id="days-to-next-period">--</strong> days<br>
+                            <span style="font-size: 0.8rem; opacity: 0.7;">Estimated: <span id="next-period-date-text">--</span></span>
+                        </div>
+                    </div>
+
+                    <!-- Log a new update / History list -->
+                    <div class="glass-card">
+                        <h3 class="card-title"><i class="fa-solid fa-feather-pointed"></i> Daily Log Agent</h3>
+                        <form id="log-form" style="margin-bottom: 1.5rem;">
+                            <div class="form-group" style="margin-bottom: 0.8rem;">
+                                <input type="text" id="log-notes-input" class="form-input" placeholder="Update symptoms, cramps, mood today..." required>
+                            </div>
+                            <button type="submit" class="btn" style="width: 100%; padding: 0.5rem 1rem; font-size: 0.85rem;">
+                                <i class="fa-solid fa-pen-nib"></i> Log Today
+                            </button>
+                        </form>
+
+                        <h4 style="font-size: 0.9rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 0.75rem; letter-spacing: 0.05em;">History Details</h4>
+                        <div class="log-history-list" id="history-logs">
+                            <!-- Filled dynamically -->
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Right Panel: Reports and Recommendations -->
+                <div class="panel-right">
+                    
+                    <!-- Predictions & Hormonal detail -->
+                    <div class="glass-card intro-summary">
+                        <h3 class="card-title"><i class="fa-solid fa-chart-line"></i> Dynamic Wellness Synthesis</h3>
+                        
+                        <div class="hormone-banner">
+                            <div class="hormone-title"><i class="fa-solid fa-vial-med"></i> Hormonal Details</div>
+                            <div class="hormone-desc" id="hormone-summary-text">Calculating hormonal fluctuations...</div>
+                        </div>
+
+                        <div class="mood-box">
+                            <span class="mood-badge"><i class="fa-solid fa-brain"></i> Predictions</span>
+                            <div class="mood-text" id="mood-prediction-text">Analyzing your mood pattern based on period logs...</div>
+                        </div>
+                    </div>
+
+                    <!-- Recommended Foods -->
+                    <div class="glass-card food-card">
+                        <div class="food-icon-large">
+                            <i class="fa-solid fa-plate-wheat"></i>
+                        </div>
+                        <div class="food-content-wrap">
+                            <h3 class="food-headline">Best Phase-Specific Food</h3>
+                            <p class="food-details" id="best-food-text">Loading dietary choices...</p>
+                        </div>
+                    </div>
+
+                    <!-- 5 Motivational thoughts -->
+                    <div class="glass-card">
+                        <h3 class="card-title"><i class="fa-solid fa-sparkles"></i> 5 Daily Motivations</h3>
+                        <ul class="rec-list" id="thoughts-list">
+                            <!-- Populated dynamically -->
+                        </ul>
+                    </div>
+
+                    <!-- 5 Tasks -->
+                    <div class="glass-card">
+                        <h3 class="card-title"><i class="fa-solid fa-list-check"></i> 5 Home & Work Items to Tackle</h3>
+                        <ul class="rec-list" id="tasks-list">
+                            <!-- Populated dynamically -->
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- VIEW 4: Safety / Support Widget (Guardrail trigger) -->
+        <section id="safety-view" class="view">
+            <div class="support-widget">
+                <div class="support-icon">
+                    <i class="fa-solid fa-hand-holding-heart animate-pulse"></i>
+                </div>
+                <h2 class="support-title">We Care About You</h2>
+                <p class="support-text">
+                    You logged feelings of heavy emotional weight. You are incredibly valuable, and you do not have to carry this alone. AuraFlow is here to protect you and guide you to safety and peace. Please connect with someone who can support you right now. 
+                </p>
+                
+                <div class="hotline-grid">
+                    <div class="hotline-card">
+                        <div class="hotline-number">988</div>
+                        <div class="hotline-name">Suicide & Crisis Lifeline</div>
+                        <div class="hotline-desc">Available 24/7. Call or Text. Free and confidential.</div>
+                    </div>
+                    <div class="hotline-card">
+                        <div class="hotline-number">Text HOME to 741741</div>
+                        <div class="hotline-name">Crisis Text Line</div>
+                        <div class="hotline-desc">Connect with a volunteer crisis counselor 24/7.</div>
+                    </div>
+                    <div class="hotline-card">
+                        <div class="hotline-number">1-800-662-4357</div>
+                        <div class="hotline-name">SAMHSA Helpline</div>
+                        <div class="hotline-desc">National helpline providing referral and support services.</div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 3rem;">
+                    <button onclick="showWelcome()" class="btn btn-secondary">
+                        <i class="fa-solid fa-arrow-left"></i> Return to Welcome Screen
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2026 AuraFlow. Made with care and support for women's cycle awareness.</p>
+            <p style="font-size: 0.75rem; opacity: 0.6;">Disclaimer: AuraFlow is an educational period buddy and tracking companion app. It does not replace professional medical advice.</p>
+        </footer>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="agent.js?v=2"></script>
+    <script src="app.js?v=2"></script>
+</body>
+</html>
